@@ -1,26 +1,28 @@
-# Weather App 🌦️
-## Vist Live website - https://arin-weather-app.netlify.app
-
-## Note - Create a .env file and then add your own API key
-## VITE_API_KEY= YOUR_API_KEY
+# Weather App 🌞
+## Vist Live website - https://arin-weather-app.netlify.app  
 
 A simple React-based weather application that fetches real-time data from the [OpenWeather API](https://openweathermap.org/api).  
 It displays the current weather, temperature, pressure, wind speed, visibility, and sunrise/sunset times for any searched city.
 
 ## Features
-- 🌍 Search weather by city name
-- 🌡️ Current temperature and description
-- 📊 Pressure, wind speed, and visibility metrics
-- 🌅 Sunrise and sunset times (converted from UNIX)
-- 🎨 Responsive UI with clean card layout
+- Search weather by city name
+- Current temperature and description
+- Pressure, wind speed, and visibility metrics
+- Sunrise and sunset times (converted from UNIX)
+- Responsive UI with clean card layout
 
 ## Tech Stack
-- React + Vite ⚛️
-- Tailwind CSS 🎨
-- Axios for API requests 🌐
+- React + Vite
+- Tailwind CSS
+- Axios for API requests
 
 ## Setup
-## Clone the repo:
+
+### Note - Create a .env file and then add your own API KEY after cloning the repo  
+
+`VITE_API_KEY = YOUR_API_KEY`
+
+### Cloning the repo:
    ```bash
 # Clone using git clone https://github.com/Arin-Yadav/Weather-app.git
 

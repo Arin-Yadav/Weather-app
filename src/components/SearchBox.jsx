@@ -1,31 +1,25 @@
-import React from "react";
 import axios from "axios";
-import clear from "../assets/clear.png";
-import cloud from "../assets/cloud.png";
-import drizzle from "../assets/drizzle.png";
-import mist from "../assets/mist2.png";
-import rain from "../assets/rain.png";
-import snow from "../assets/snow.png";
-import { CiSearch } from "react-icons/ci";
+import {images} from '../assets/images'
+import { Search } from "lucide-react";
 
 const SearchBox = ({ inputSearch, setInputSearch, setWeatherData }) => {
   const allIcons = {
-    "01d": clear,
-    "01n": clear,
-    "02d": cloud,
-    "02n": cloud,
-    "03d": cloud,
-    "03n": cloud,
-    "04d": drizzle,
-    "04n": drizzle,
-    "09d": rain,
-    "09n": rain,
-    "10d": rain,
-    "10n": rain,
-    "13d": snow,
-    "13n": snow,
-    "50d": mist,
-    "50n": mist,
+    "01d": `${images.clear}`,
+    "01n": `${images.clear}`,
+    "02d": `${images.cloud}`,
+    "02n": `${images.cloud}`,
+    "03d": `${images.cloud}`,
+    "03n": `${images.cloud}`,
+    "04d": `${images.drizzle}`,
+    "04n": `${images.drizzle}`,
+    "09d": `${images.rain}`,
+    "09n": `${images.rain}`,
+    "10d": `${images.rain}`,
+    "10n": `${images.rain}`,
+    "13d": `${images.snow}`,
+    "13n": `${images.snow}`,
+    "50d": `${images.mist}`,
+    "50n": `${images.mist}`,
   };
 
   const search = async () => {
@@ -36,8 +30,8 @@ const SearchBox = ({ inputSearch, setInputSearch, setWeatherData }) => {
       }`;
       const response = await axios.get(url);
 
-      const icon = allIcons[response.data.weather[0].icon] || clear;
-      const _condition = response.data.weather[0].main; // "Clear", "Clouds", "Rain"
+      const icon = allIcons[response.data.weather[0].icon] || `${images.clear}`;
+      // const _condition = response.data.weather[0].main; // "Clear", "Clouds", "Rain"
 
       setWeatherData({
         humidity: response.data.main.humidity,
@@ -86,10 +80,8 @@ const SearchBox = ({ inputSearch, setInputSearch, setWeatherData }) => {
         value={inputSearch}
         onChange={handleSearch}
       />
-      <button
-        onClick={search}
-        className="px-3 py-2 rounded-full bg-white hover:bg-gray-200 transition-colors cursor-pointer">
-        <CiSearch className="h-5 w-5 text-black" />
+      <button onClick={search} className="px-3 py-2 cursor-pointer">
+        <Search className="h-5 w-5" />
       </button>
     </div>
   );
