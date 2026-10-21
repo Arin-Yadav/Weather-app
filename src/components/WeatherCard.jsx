@@ -1,83 +1,110 @@
-import visibility from "../assets/visibility_icon.png";
-import wind from "../assets/wind_icon.png";
-import pressure from "../assets/pressure.png";
-import sunrise from "../assets/sunrise.png";
-import sunset from "../assets/sunset.png";
-import humidity from "../assets/humidity.png";
+import {
+  Eye,
+  Gauge,
+  MapPin,
+  Sunrise,
+  Sunset,
+  Wind,
+  Droplets,
+} from "lucide-react";
 
 const WeatherCard = ({ weatherData }) => {
-  return (
-    weatherData && (
-      <div className="w-full sm:max-w-2xl lg:max-w-3xl sm:px-6 py-2 rounded-xl">
-        {/* Main Weather Display */}
-        <div className="flex flex-col gap-2 items-center py-5 justify-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-center text-white drop-shadow-md">
-            {weatherData.location}, {weatherData.country}
-          </h2>
-          <div className="flex items-center justify-center gap-3 sm:gap-5">
-            <img
-              src={weatherData.icon}
-              alt="weather_icon"
-              className="h-24 w-24 sm:h-32 sm:w-32 drop-shadow-lg"
-            />
-            <div className="text-center sm:text-left text-white">
-              <p className="text-base sm:text-lg capitalize">
-                {weatherData.description}
-              </p>
-              <p className="text-3xl sm:text-4xl lg:text-5xl font-extrabold">
-                {weatherData.temp}°C
-              </p>
-            </div>
-          </div>
-        </div>
+  const metrics = [
+    {
+      label: "Humidity",
+      value: `${weatherData.humidity}%`,
+      icon: Droplets,
+    },
+    {
+      label: "Wind",
+      value: `${weatherData.wind} km/h`,
+      icon: Wind,
+    },
+    {
+      label: "Pressure",
+      value: `${weatherData.pressure} hPa`,
+      icon: Gauge,
+    },
+    {
+      label: "Visibility",
+      value: `${weatherData.visibility} km`,
+      icon: Eye,
+    },
+    {
+      label: "Sunrise",
+      value: weatherData.sunrise,
+      icon: Sunrise,
+    },
+    {
+      label: "Sunset",
+      value: weatherData.sunset,
+      icon: Sunset,
+    },
+  ];
 
-        {/* Metrics Grid */}
-        <div className="flex overflow-x-auto gap-4 mt-5 w-full snap-x snap-mandatory scroll-smooth metrics-scroll scrollbar-track-transparent pb-4 px-2 py-2">
-          {[
-            {
-              label: "Humidity",
-              value: `${weatherData.humidity}%`,
-              icon: humidity,
-            },
-            {
-              label: "Pressure",
-              value: `${weatherData.pressure} hPa`,
-              icon: pressure,
-            },
-            { label: "Wind", value: `${weatherData.wind} km/h`, icon: wind },
-            {
-              label: "Visibility",
-              value: `${weatherData.visibility} km`,
-              icon: visibility,
-            },
-            {
-              label: "Sunrise",
-              value: `${weatherData.sunrise}`,
-              icon: sunrise,
-            },
-            { label: "Sunset", value: `${weatherData.sunset}`, icon: sunset },
-          ].map((metric, i) => (
-            <div
-              key={i}
-              className="flex flex-col gap-2 items-center justify-center rounded-xl shadow-md bg-white shrink-0 snap-center w-32 h-full transition-transform duration-300 hover:scale-105">
-              <div className="flex flex-col justify-center h-24 w-20 items-center">
-                <img
-                  src={metric.icon}
-                  alt={metric.label}
-                  className="h-full w-full object-contain mb-2"
-                />
-              </div>
-              <p className="text-sm sm:text-base font-semibold text-gray-900 text-center">
-                {metric.label}
-              </p>
-              <h6 className="text-md sm:text-base text-gray-900 text-center">
-                {metric.value}
-              </h6>
-            </div>
-          ))}
+  return (
+    <div className="px-5 pb-6 pt-6 sm:px-9 sm:pb-9 sm:pt-8">
+      <section className="relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-sky-300/10 via-white/4 to-indigo-300/10 p-5 sm:p-8">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-sky-300/10 blur-3xl"
+        />
+        <div className="relative flex flex-col items-center justify-around gap-5 text-center sm:flex-row sm:text-left">
+          <div className="order-2 sm:order-1">
+            <p className="mb-2 flex items-center justify-center gap-2 text-sm font-medium text-slate-300 sm:justify-start">
+              <MapPin aria-hidden="true" className="h-4 w-4 text-sky-200" />
+              {weatherData.location}, {weatherData.country}
+            </p>
+            {/* <p className="text-sm capitalize text-slate-400">
+              {weatherData.description}
+            </p> */}
+            <p className="mt-1 text-6xl font-light tracking-[-0.07em] text-white sm:text-7xl">
+              {weatherData.temp}
+              <span className="ml-1 align-top text-3xl font-normal text-slate-300">
+                ° C
+              </span>
+            </p>
+            <p className="mt-5 text-xs font-medium tracking-[0.16em] text-slate-500 uppercase">
+              {weatherData.description}
+            </p>
+          </div>
+
+          <img
+            src={weatherData.icon}
+            alt={weatherData.description}
+            className="order-1 h-32 w-32 object-contain drop-shadow-[0_12px_30px_rgba(125,211,252,0.2)] sm:order-2 sm:h-40 sm:w-40"
+          />
         </div>
-      </div>
-    )
+      </section>
+
+      <section className="mt-6" aria-label="Weather details">
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-slate-200">
+            Today's details
+          </h2>
+          <span className="text-xs text-slate-500">Live conditions</span>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+          {metrics.map((metric) => {
+            const Icon = metric.icon;
+
+            return (
+              <div
+                key={metric.label}
+                className="rounded-2xl border cursor-pointer flex flex-col items-center border-white/8 bg-white/[0.035] p-4 transition duration-200 hover:border-sky-200/20 hover:bg-white/6 sm:p-5">
+                <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-xl bg-sky-300/10 text-sky-200">
+                  <Icon aria-hidden="true" className="h-4 w-4" />
+                </div>
+                <p className="text-xs text-slate-400">{metric.label}</p>
+                <p className="mt-1 text-base font-semibold tracking-tight text-slate-100 sm:text-lg">
+                  {metric.value}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+    </div>
   );
 };
 
